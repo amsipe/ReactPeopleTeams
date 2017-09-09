@@ -1,42 +1,176 @@
+@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');
 
+.App {
+  background-color: #3E4040;
+  width: 50%;
+  margin: 0 auto;
+  padding: 40px 0;
+  border-radius: 5px;
+}
 .container-pending {
   border: 1px solid black;
+  border-radius: 5px;
   margin: 40px auto;
   display: block;
-  width: 20%;
+  min-width: 35%;
+  max-width: 50%;
+  color: #DFE6E6;
+  font-size: .75em;
+  background-color: #575A5A;
 }
 
 .container-team {
-  border: 1px solid black;
+  
   display: block;
-  width: 60%;
+  width: 80%;
   margin: 40px auto;
   overflow: hidden;
+  color: #DFE6E6;
+  font-size: .75em;
 }
 
-.container-team span {
+/* .container-team span {
   margin: 0 5px;
-}
-.team-one {
-  border: 1px solid black;
-  float: left;
+} */
+
+.team-list {
+  border: 1px solid #DFE6E6;
+  border-radius: 5px;
   margin: 25px 15px;
   list-style-type: none;
   padding: 10px;
+  background-color: #575A5A;
+  min-width: 30%;
+  display: inline-block;
+}
+.team-list p {
+  text-align: center;
+  border-bottom: 1px solid #DFE6E6;
+  padding: 0;
+  margin: 0 0 5px 0;
+}
+
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+
+.cancel,.move-team {
+  
+  display: block;
+  line-height: 13px;
+  border: 1px solid #DFE6E6;
+  text-align: center;
+  border-radius: 50%;
+  color: #DFE6E6;
+  width: 13px;
+  height: 13px;
+  font-size: 1em;
+
   
 }
 
-.team-two {
-  border: 1px solid black;
-  float: right;
-  margin: 25px 15px;
+.cancel:hover {
+  color: tomato;
+  cursor: pointer;
+
+}
+
+.move-team:hover {
+  color: lightskyblue;
+  cursor: pointer;
+}
+
+.assign-table {
+  padding: 15px;
+  margin: 0 auto;
+
+}
+
+.assign-table td:nth-child(n+2) {
+  text-align: center;
+  line-height: 15px;
+
+}
+.assign-table td a {
+  font-family: 'Gloria Hallelujah', cursive;
+  display: block;
+  font-size: 12px;
+  border: 1px solid #DFE6E6;
+  border-radius: 5px;
+  width: 40px;
+  transition: all 200ms;
+}
+
+.assign-table td:hover a {
+  cursor: pointer;
+  border: 1px solid rgba(223,230,230,.75);
+  color: rgba(223,230,230,.75);
+}
+.assign-table th {
+  text-align: center;
+  border-bottom: 1px solid #DFE6E6;
+
+}
+
+.assign-table th:nth-child(2) {
+  width: 100px;
+} 
+.assign-table th:first-child {
+  width: 120px;
+} 
+ul.teamMember {
   list-style-type: none;
-  padding: 10px;
- 
+  padding: 0;
+  margin: 0;
+  clear: right;
+}
+ul.teamMember li {
+  display: inline-block;
+  margin: 3px 0;
+  
+}
+
+ul.teamMember .float-right li {
+  margin-left: 5px;
+}
+
+.float-right {
+  float: right;
+}
+.cancel {
+  transition: transform 800ms ease-out,
+                opacity 800ms ease-out;
+  transform: translateX(-20px);
+  opacity: 0;
+
+}
+.move-team {
+  transition: transform 650ms ease-out,
+                opacity 800ms ease-out;
+  transform: translateX(-30px);
+  opacity: 0;
+
 }
 
 
+ul.teamMember:hover i {
+  transform: translateX(0px);
+  opacity: 1;
 
+}
+
+/* ul.pending-list {
+  list-style-type: none;
+  padding: 0 25px;
+}
+.pending-list li {
+  
+  clear: right;
+  height: 15px;
+} */
 
 
 

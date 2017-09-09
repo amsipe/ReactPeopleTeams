@@ -3,53 +3,15 @@ import React from 'react';
 
 
 function Teams (props) {
+  //console.log(props.teamMember.name);
     return (
-        <div className="container-team">
-        <ul className="team-one">
-          <li>
-            <button>Un-assign</button>
-            <span>Team-one</span>
-            <button>Switch Teams</button>
-            </li>
-          <li>
-            <button>Un-assign</button>
-            <span>Team-one</span>
-            <button>Switch Teams</button>
-            </li>
-          <li>
-            <button>Un-assign</button>
-            <span>Team-one</span>
-            <button>Switch Teams</button>
-            </li>
-          <li>
-            <button>Un-assign</button>
-            <span>Team-one</span>
-            <button>Switch Teams</button>
-            </li>
-        </ul>
-        <ul className="team-two">
-          <li>
-            <button>Un-assign</button>
-            <span>Team-two</span>
-            <button>Switch Teams</button>
-          </li>
-          <li>
-            <button>Un-assign</button>
-            <span>Team-two</span>
-            <button>Switch Teams</button>
-          </li>
-          <li>
-            <button>Un-assign</button>
-            <span>Team-two</span>
-            <button>Switch Teams</button>
-          </li>
-          <li>
-            <button>Un-assign</button>
-            <span>Team-two</span>
-            <button>Switch Teams</button>
-          </li>
-        </ul>
-      </div>
+      <ul className="teamMember">
+        <li draggable={true}>{props.teamMember.name}</li>
+        <div className="float-right">
+          <li><i className="cancel" onClick={()=> {props.onRemove(props.teamMember)}}>&#x2718;</i></li>
+          <li><i className="move-team" onClick={() => {props.onSwitchTeam(props.teamMember)}}>&#8596;</i></li>
+        </div>
+      </ul>
     )
 }
 

@@ -5,7 +5,7 @@ const PEOPLE = [
         id: 0
     },
     {
-        name: "Tom Cruise",
+        name: "Arnold Swarzengger",
         team: null,
         id: 1
     },
