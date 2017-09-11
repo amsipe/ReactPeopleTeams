@@ -98,12 +98,12 @@ class App extends Component {
     console.log(e.currentTarget);
   }
   handleDragDrop (e) {
-    e.preventDefault();
     console.log("hotdog");
     console.log(e);
 
   }
   handleDragStart (e){
+    
     console.log(e.currentTarget.dataset.id);
   }
   render() {
@@ -128,7 +128,7 @@ class App extends Component {
           </table>
 
         </div>
-        <div data-id="one" className="container-team" >
+        <div className="container-team" onDrop={this.handleDragDrop}>
           <div className="team-list float-left">
               <p>Team One</p>
                 {this.state.teamOne.map(function(person,index){
@@ -137,23 +137,20 @@ class App extends Component {
                      dataId={index} 
                      dataTeam={"one"} 
                      teamMember={person} 
-                     onStartDrag={this.handleDragStart} 
-                     onEnterDrag={this.handleDragEnter} 
+                     onStartDrag={this.handleDragStart}        
                      onSwitchTeam={this.handleSwitch} 
                      onRemove={this.handleRemove}/>
                   )
                 }.bind(this))}
           </div>
-          <div className="team-list float-right" onDrop={this.handleDragDrop}>
+          <div className="team-list float-right">
               <p>Team Two</p>
               {this.state.teamTwo.map(function(person,index){
                 return (
                   <Teams key={index} 
                   dataId={index} 
-                  dataTeam={"two"} 
                   teamMember={person} 
                   onStartDrag={this.handleDragStart} 
-                  onEnterDrag={this.handleDragEnter} 
                   onSwitchTeam={this.handleSwitch} 
                   onRemove={this.handleRemove}/>
                 )

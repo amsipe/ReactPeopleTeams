@@ -6,7 +6,7 @@ function Teams (props) {
       <ul 
         className="teamMember" 
         data-team={props.dataTeam} 
-        onDragEnter={(e)=> {props.onEnterDrag(e)}}
+        
       >
         <li onDragStart={props.onStartDrag} data-id={props.dataId} draggable={true}>{props.teamMember.name}</li>
         <div className="float-right">
