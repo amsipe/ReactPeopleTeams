@@ -18,6 +18,7 @@ class App extends Component {
     this.handleRemove = this.handleRemove.bind(this);
     this.handleDragEnter = this.handleDragEnter.bind(this);
     this.handleDragDrop = this.handleDragDrop.bind(this);
+    this.handleDragStart = this.handleDragStart.bind(this);
   }
   handleAssign (person,team) {
     
@@ -94,10 +95,16 @@ class App extends Component {
 
   handleDragEnter (e) {
     e.preventDefault();
+    console.log(e.currentTarget);
   }
   handleDragDrop (e) {
+    e.preventDefault();
     console.log("hotdog");
     console.log(e);
+
+  }
+  handleDragStart (e){
+    console.log(e.currentTarget.dataset.id);
   }
   render() {
     
@@ -121,23 +128,37 @@ class App extends Component {
           </table>
 
         </div>
-        <div className="container-team" onDragOver={this.handleDragEnter} onDrop={this.handleDragDrop}>
+        <div data-id="one" className="container-team" >
           <div className="team-list float-left">
-            <p>Team One</p>
-              {this.state.teamOne.map(function(person,index){
+              <p>Team One</p>
+                {this.state.teamOne.map(function(person,index){
+                  return (
+                    <Teams key={index}
+                     dataId={index} 
+                     dataTeam={"one"} 
+                     teamMember={person} 
+                     onStartDrag={this.handleDragStart} 
+                     onEnterDrag={this.handleDragEnter} 
+                     onSwitchTeam={this.handleSwitch} 
+                     onRemove={this.handleRemove}/>
+                  )
+                }.bind(this))}
+          </div>
+          <div className="team-list float-right" onDrop={this.handleDragDrop}>
+              <p>Team Two</p>
+              {this.state.teamTwo.map(function(person,index){
                 return (
-                  <Teams key={index} teamMember={person} onSwitchTeam={this.handleSwitch} onRemove={this.handleRemove}/>
+                  <Teams key={index} 
+                  dataId={index} 
+                  dataTeam={"two"} 
+                  teamMember={person} 
+                  onStartDrag={this.handleDragStart} 
+                  onEnterDrag={this.handleDragEnter} 
+                  onSwitchTeam={this.handleSwitch} 
+                  onRemove={this.handleRemove}/>
                 )
               }.bind(this))}
-        </div>
-        <div className="team-list float-right">
-            <p>Team Two</p>
-            {this.state.teamTwo.map(function(person,index){
-              return (
-                <Teams key={index} teamMember={person} onEnterDrag={this.handleDragEnter} onSwitchTeam={this.handleSwitch} onRemove={this.handleRemove}/>
-              )
-            }.bind(this))}
-        </div>
+          </div>
       </div>
       </div>
     );
