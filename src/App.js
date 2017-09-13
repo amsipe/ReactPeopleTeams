@@ -11,7 +11,8 @@ class App extends Component {
     this.state = {
       people: [...PEOPLE],
       teamOne: [],
-      teamTwo: []
+      teamTwo: [],
+      message: "Testing"
     }
     this.handleAssign = this.handleAssign.bind(this);
     this.handleSwitch = this.handleSwitch.bind(this);
@@ -43,6 +44,7 @@ class App extends Component {
     
     let newTeamOne = this.state.teamOne;
     let newTeamTwo = this.state.teamTwo;
+    let newPeopleState = this.state.people;
     if(person.team === "one"){
      
       newTeamOne = newTeamOne.filter(function(member){
@@ -54,9 +56,9 @@ class App extends Component {
       })
     }
     person.team = "";
-    this.state.people.push(person);
+    newPeopleState.push(person);
     this.setState({
-      people: this.state.people,
+      people: [...newPeopleState],
       teamOne: [...newTeamOne],
       teamTwo: [...newTeamTwo]
     });
@@ -95,24 +97,76 @@ class App extends Component {
 
   handleDragEnter (e) {
     e.preventDefault();
-    console.log(e.currentTarget);
+    e.dataTransfer.effectAllowed = "move";
+    console.log(e.dataTransfer);
+    //console.log(e.currentTarget);
   }
   handleDragDrop (e) {
-    console.log("hotdog");
-    console.log(e);
+
+    const draggedItem = this.draggedItem.dataset;
+    let newPeopleState = this.state.people;
+    let newTeamOne = this.state.teamOne;
+    let newTeamTwo = this.state.teamTwo;
+
+    if(e.target.dataset.team === "two"){
+      let newPerson = newTeamOne[draggedItem.id];
+      newPerson.team = "two";
+      newTeamTwo.push(newTeamOne[draggedItem.id]);
+      newTeamOne.splice(draggedItem.id,1);
+      this.setState({
+        teamOne: [...newTeamOne],
+        teamTwo: [...newTeamTwo]
+      })
+      
+     } else if (e.target.dataset.team === "one"){
+      let newPerson = newTeamTwo[draggedItem.id];
+      newPerson.team = "one";
+      newTeamOne.push(newPerson);
+      newTeamTwo.splice(draggedItem.id,1);
+      this.setState({
+        teamOne: [...newTeamOne],
+        teamTwo: [...newTeamTwo]
+      })
+     } else if (e.target.dataset.team === "none"){
+        console.log(draggedItem.team);
+        if(draggedItem.team === "one"){
+          let newPerson = newTeamOne[draggedItem.id];
+          newPerson.team = null;
+          newTeamOne.splice(draggedItem.id,1);
+          newPeopleState.push(newPerson);
+          this.setState({
+            people: [...newPeopleState],
+            teamOne: [...newTeamOne]
+          })
+        }else if (draggedItem.team === "two"){
+          let newPerson = newTeamTwo[draggedItem.id];
+          newPerson.team = null;
+          newTeamTwo.splice(draggedItem.id,1);
+          newPeopleState.push(newPerson);
+          this.setState({
+            people: [...newPeopleState],
+            teamTwo: [...newTeamTwo]
+          })
+        }
+     }
 
   }
   handleDragStart (e){
+    this.draggedItem = e.currentTarget;
     
-    console.log(e.currentTarget.dataset.id);
   }
   render() {
-    
+    let message;
+    if(this.state.people.length < 1){
+      message = "-- There are no more players left to assign. --"
+    }else{
+      message = null;
+    }
     return (
       <div className="App">
 
-        <div className="container-pending">
-          <table className="assign-table">
+        <div className="container-pending" data-team="none" onDragOver={this.handleDragEnter} onDrop={this.handleDragDrop} >
+          <table className="assign-table" >
             <tbody>
               <tr>
                 <th>Name</th>
@@ -124,18 +178,21 @@ class App extends Component {
                     <PendingPeople key={index} person={person} index={index} onPersonAssign={this.handleAssign}/>
                 )
               }.bind(this))}  
+              
             </tbody>
           </table>
+          {message ? <p>{message}</p> : null}
 
         </div>
-        <div className="container-team" onDrop={this.handleDragDrop}>
-          <div className="team-list float-left">
+        <div className="container-team" >
+          <div className="team-list float-left" onDragOver={this.handleDragEnter} onDrop={this.handleDragDrop}>
               <p>Team One</p>
                 {this.state.teamOne.map(function(person,index){
                   return (
-                    <Teams key={index}
+                    <Teams 
+                     key={index}
                      dataId={index} 
-                     dataTeam={"one"} 
+                     
                      teamMember={person} 
                      onStartDrag={this.handleDragStart}        
                      onSwitchTeam={this.handleSwitch} 
@@ -143,11 +200,13 @@ class App extends Component {
                   )
                 }.bind(this))}
           </div>
-          <div className="team-list float-right">
+          <div className="team-list float-right" onDragOver={this.handleDragEnter} onDrop={this.handleDragDrop}>
               <p>Team Two</p>
               {this.state.teamTwo.map(function(person,index){
                 return (
-                  <Teams key={index} 
+                  <Teams 
+                  key={index} 
+
                   dataId={index} 
                   teamMember={person} 
                   onStartDrag={this.handleDragStart} 
