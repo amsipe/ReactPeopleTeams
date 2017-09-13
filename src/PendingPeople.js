@@ -3,20 +3,15 @@ import React from 'react';
 
 
 function PendingPeople (props) {
-    console.log(props.initialPeople[0]);
 
-    return (
-        <div className="container-pending">
-          <ul className="pending-list">
-            {props.initialPeople.map(function(person,index){
-                return (
-                    <li key={props.initialPeople.id}><button onClick={props.onPersonAssign}>Assign</button>{person.name}</li>
-                )
-            })}  
+        return (
 
-          </ul>
-        </div>
-    );
+            <tr key={props.person.id}>
+                <td>{props.person.name}</td>
+                <td><a className="one-assign" onClick={function() {props.onPersonAssign(props.person,"teamOne")}}>One</a></td>
+                <td><a className="two-assign" onClick={function() {props.onPersonAssign(props.person,"teamTwo")}}>Two</a></td>
+            </tr>
+        );
 }
 
 export default PendingPeople;
